@@ -44,13 +44,14 @@ body {
 
 .project h2 {
     margin-bottom: 10px;
+    padding-left: 0.2em;
     color: #27496D;
 }
 
 .project img {
     width: 150px;
     height: 150px;
-    border-radius: 10px;
+    border-radius: 30px;
 }
 
 .project p {
@@ -58,4 +59,18 @@ body {
     padding: 2px;
     line-height: 25px;
     font-weight: 600;
+}
+
+.fade-in {
+    opacity: 1;
+}
+
+.fade-out {
+    opacity: 0;
+    transition: opacity 1s ease 0s;
+}
+
+@keyframes fade-in {
+    from {opacity: 0;}
+    to {opacity: 1;}
 }

@@ -1,11 +1,9 @@
 package main
 
 import (
-	"encoding/json"
-	"io/ioutil"
+	"factory/controllers"
 	"log"
 	"net/http"
-	"path/filepath"
 	"text/template"
 )
 
@@ -40,25 +38,6 @@ func appHandler(w http.ResponseWriter, r *http.Request) {
 	return
 }
 
-func contentHandler(w http.ResponseWriter, r *http.Request) {
-	if r.Method == "GET" {
-		resp := map[string]string{"content": "", "status": "-1"}
-		fileName := filepath.Join("data", r.URL.Query().Get("file")+".txt")
-		content, err := ioutil.ReadFile(fileName)
-		if err == nil {
-			resp["content"] = string(content)
-			resp["status"] = "1"
-		}
-		w.Header().Set("content-type", "application/json")
-		err = json.NewEncoder(w).Encode(resp)
-		if err != nil {
-			http.Error(w, "Iternal server Error", http.StatusInternalServerError)
-		}
-	} else {
-		http.Error(w, "Method not allowed", http.StatusMethodNotAllowed)
-	}
-}
-
 func main() {
 	//
 	fileServer := http.FileServer(http.Dir("frontend"))
@@ -66,6 +45,6 @@ func main() {
 	fileServer = http.FileServer(http.Dir("static"))
 	http.Handle("/static/", http.StripPrefix("/static/", fileServer))
 	http.HandleFunc("/", appHandler)
-	http.HandleFunc("/api/content", contentHandler)
+	http.HandleFunc("/api/content", controllers.ViewAllContent)
 	log.Fatal(http.ListenAndServe(":8000", nil))
 }

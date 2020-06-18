@@ -1,54 +1,52 @@
 const IMAGE_STORAGE = "/static/images/"
 
 function App(props) {
-    window.addEventListener("scroll", handleScroll)
-    function handleScroll(event) {
-        
+    const [response, isLoaded, error] = useResponse()
+    if (error) {
+        return <div>Произошла ошибка, пожалуйста, попробуйте перезагрузить страницу!</div>
+    } else if (!isLoaded) {
+        return <div>Идет загрузка</div>
+    } else { 
+        return (
+            <div className="content-container">
+                <Intro content={response.content.intro}/>
+                <Projects content={response.content.projects}/>
+            </div>
+        )
     }
-    return (
-        <div className="content-container">
-            <Intro/>
-            <Projects/>
-        </div>
-    )
 }
 
 function Intro(props) {
-    const contentInfo = useContent("intro")
-    const intro = (
+    const text = props.content.text
+    return (
         <Section className="intro">
-            <h1>{contentInfo[0]}</h1>
+            <h1>{text}</h1>
         </Section>
     )
-    return handleContent(contentInfo, intro)
 }
 
 function Projects(props) {
-    const contentInfo = useContent("projects")
-    const hIndex = contentInfo[0].indexOf("\n")
-    const text = contentInfo[0].slice(hIndex)
-    const projectList = contentInfo[0].slice(0, hIndex).split(",")
-    const projects = (
+    const content = props.content || {}
+    const related_content = content.related_content || []
+    return (
         <Section className="projects">
-            <h1>{text}</h1>
-            {projectList.map(value => {
-                return <Project key={value} name={value}/>
+            <h1>{content.text}</h1>
+            {related_content.map(value => {
+                return <Project key={value.ID} content={value}/>
             })}
         </Section>
     )
-    return handleContent(contentInfo, projects)
 }
 
 function Project(props) {
-    const contentInfo = useContent(props.name)
-    const project = (
-        <a className="project">
-            <h2>{props.name}</h2>
-            <Image name={props.name}/>
-            <p>{contentInfo[0]}</p>
+    const content = props.content || {} 
+    return (
+        <a className="project" data-animate>
+            <h2>{content.title}</h2>
+            <Image name={content.title}/>
+            <p>{content.text}</p>
         </a>
     )
-    return handleContent(contentInfo, project)
 }
 
 function Image(props) {
@@ -59,20 +57,20 @@ function Section(props) {
     return <div className={props.className + " section"}>{props.children}</div>
 }
 
-function useContent(fileName) {
+function useResponse(path) {
     const [content, setContent] = React.useState("")
     const [isLoaded, setIsLoaded] =  React.useState(false)
     const [error, setError] = React.useState(null)
 
     React.useEffect(() => {
-        const path = "/api/content?file=" + fileName
+        const path = path || "/api/content"
         fetch(path, {
             method: "GET"
             }
         ).then(res => res.json()
         ).then(
             response => {
-                setContent(response.content)
+                setContent(response)
                 setIsLoaded(true)
             },
             reason => setError(reason)
@@ -91,6 +89,31 @@ function handleContent(contentInfo, contentViewer) {
         return contentViewer
         
     }
+}
+
+window.addEventListener("scroll", () => {
+    let duration = 2
+    let aElems = document.querySelectorAll("*[data-animate]")
+    for (let elem of aElems) {
+        if (onWindow(elem)) {
+            if (!fadedIn(elem)) {
+                elem.style.animation = `${duration}s fade-in ease`
+            }
+        } else if (fadedIn(elem)) {
+            elem.style.animation = ""
+        }
+    }
+})
+
+function onWindow(elem) {
+    const yOffsetBot = pageYOffset + window.innerHeight,
+          tBorder = elem.offsetTop + elem.offsetHeight - 10,
+          bBorder = elem.offsetTop + 10
+    return (pageYOffset < tBorder && bBorder < yOffsetBot)
+}
+
+function fadedIn(elem) {
+    return elem.style.animation //elem.classList.contains("fade-in")
 }
 
 ReactDOM.render(
