@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" height="600" width="600" >
+    <defs>
+    <style type="text/css"><![CDATA[
+        #field {
+            stroke: green;
+        }
+    ]]>
+    </style>
+    </defs>
+    <pattern id="pattern" x="0" y="0" width="1" height=".50" >
+        <path d="M0 80 Q 80 10 160 80" stroke-width="10"
+        stroke-linecap="square" fill="none" stroke-linejoin="roung" id="field"/>
+        <use xlink:href="#field" x="160" y="0" fill="green"/>
+    </pattern>
+    <rect fill="url(#pattern)" width="800" height="200"/>
+</svg>
+
+<!-- rgb(56, 56, 56) -->
