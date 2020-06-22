@@ -140,7 +140,7 @@ function Science(props) {
     const related_content = content.related_content || []
     return (
         <Section className="science" id="science">
-            <List title="WGarden regulations:" items={related_content} specListItemConponent={Paragraph}/>
+            <List title="WGarden regulations:" items={related_content} specListItemComponent={Paragraph}/>
         </Section>
     )
 }
@@ -206,7 +206,7 @@ function Section(props) {
 
 function List(props) {
     const title = props.title && <h1>{props.title}</h1> 
-    const SpLiComp = props.specListItemConponent
+    const SpLiComp = props.specListItemComponent
     return (
         <React.Fragment>
             {title}
@@ -333,9 +333,9 @@ function addAnimation(elem, cssAnimation) {
 
 function onWindow(elem) {
     const yOffsetBot = pageYOffset + window.innerHeight,
-          tBorder = elem.offsetTop + elem.offsetHeight - 5,
-          bBorder = elem.offsetTop + 5
-    return (pageYOffset < tBorder && bBorder < yOffsetBot)
+          bBorder = elem.offsetTop + elem.offsetHeight - 5,
+          tBorder = elem.offsetTop + 5
+    return (pageYOffset < bBorder && tBorder < yOffsetBot)
 }
 
 function fadedIn(elem) {
