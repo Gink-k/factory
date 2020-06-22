@@ -261,9 +261,10 @@ a.next-arrow {
 
 .partners .image-div {
     height: 200px;
-    width: 300px;
+    width: 200px;
     background-size: contain;
     background-repeat: no-repeat;
+    background-position: center;
 }
 
 /*############################################################################ */

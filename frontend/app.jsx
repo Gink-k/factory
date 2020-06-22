@@ -140,12 +140,7 @@ function Science(props) {
     const related_content = content.related_content || []
     return (
         <Section className="science" id="science">
-            <h1>WGarden regulations:</h1>
-            <ul>
-                {related_content.map(value => {
-                    return <Paragraph content={value} key={value.ID}/>
-                })}
-            </ul>
+            <List title="WGarden regulations:" items={related_content} specListItemConponent={Paragraph}/>
         </Section>
     )
 }
@@ -166,12 +161,7 @@ function Partners(props) {
     const related_content = content.related_content || []
     return (
         <Section className="partners">
-            <h1>{content.text}</h1>
-            <ul>
-                {related_content.map(value => {
-                    return <ListItem imageName={value.text} key={value.ID}/>
-                })}
-            </ul>
+            <List title={content.text} items={related_content}/>
         </Section>
     )
 }
@@ -179,6 +169,21 @@ function Partners(props) {
 // #################
 // Top level Section
 // #################
+
+function News(props) {
+    const content = props.content || {}
+    const related_content = content.related_content || []
+    return (
+        <Section className="news">
+            <List title={content.title} items={related_content}/>
+        </Section>
+    )    
+}
+
+// #################
+// Top level Section
+// #################
+
 
 function Connections(props) {
 
@@ -199,8 +204,23 @@ function Section(props) {
     return <section className={className + " section"} ref={_ref} {...rest} data-animate-section>{children}</section>
 }
 
+function List(props) {
+    const title = props.title && <h1>{props.title}</h1> 
+    const SpLiComp = props.specListItemConponent
+    return (
+        <React.Fragment>
+            {title}
+            <ul>
+                {props.items.map(value => {
+                    return SpLiComp && <SpLiComp content={value}/> || <ListItem imageName={value.text} key={value.ID}/>
+                })}
+            </ul>
+        </React.Fragment>
+    )
+}
+
 function ListItem(props) {
-    const {title, text, imageName, ...rest} = props,
+    const {title, text, imageName, ...rest} = props.content,
           lTitle = title && <h2>{props.title}</h2>,
           lImage = imageName && <BackgroundImage name={imageName + "_icon.svg"}/>,
           lText  = text && <p>{text}</p>
