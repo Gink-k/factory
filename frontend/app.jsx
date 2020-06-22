@@ -220,7 +220,7 @@ function List(props) {
 }
 
 function ListItem(props) {
-    const {title, text, imageName, ...rest} = props.content,
+    const {title, text, imageName, ...rest} = props,
           lTitle = title && <h2>{props.title}</h2>,
           lImage = imageName && <BackgroundImage name={imageName + "_icon.svg"}/>,
           lText  = text && <p>{text}</p>
