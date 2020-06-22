@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" height="1000" width="200" >
+    <defs>
+    <style type="text/css"><![CDATA[
+        #ring {
+            stroke: #27496d;
+        }
+        #nature {
+            font-weight: bold;
+            font-size: 2.5em;
+            fill: #27496d;
+            font-family: Proxima Nova, Helvetica Neue, Helvetica, Roboto, Arial, sans-serif;
+        }
+        #flask-left {
+            fill: transparent;
+            stroke: #27496d;
+        }
+        #flask-right {
+            fill: transparent;
+            stroke: #27496d;
+        }
+        #ban-line {
+            fill: transparent;
+            stroke: #27496d;
+        }
+    ]]>
+    </style>
+    </defs>
+    <g>
+        <circle cx="100" cy="100" r="90" stroke-width="15" fill="none" id="ring"/>
+        <text x="40" y="110" id="nature">Nature</text>
+    </g>
+    <g>
+        <use x="0" y="200" width="200" height="200" href="#ring"/>
+        <path d="M100 350 H 70 Q 60 340 70 330 L 90 300 V 270 Q 85 265 90 260 H 100" stroke-width="5" id="flask-left"/>
+        <path d="M100 350 H 70 Q 60 340 70 330 L 90 300 V 270 Q 85 265 90 260 H 100" transform="scale(-1, 1), translate(-200, 0)" stroke-width="5" id="flask-right"/>
+        <line x1="40" y1="370" x2="160" y2="230" stroke-width="15" id="ban-line"/> 
+    </g>
+</svg>
+
+<!-- rgb(56, 56, 56) -->

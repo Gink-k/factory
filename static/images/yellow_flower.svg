@@ -10,11 +10,17 @@
             fill: yellow;
             stroke: yellow;
         }
+        #bud-inside {
+            fill: transparent;
+            stroke: black;
+            stroke-width: 0.5;
+        }
     ]]>
     </style>
     </defs>
     <g>
         <path d="M20 40 C 10 40 5 30 10 25 S 25 25 20 40" id="bud"/>
+        <path d="M20 40 Q 10 33 10 25" id="bud-inside"/>
         <path d="M20 200 Q 0 180 20 160 T 20 120 T 20 80 T 20 40" id="stem"/>
     </g>
 </svg>

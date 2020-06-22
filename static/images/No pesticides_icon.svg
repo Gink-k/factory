@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" height="200" width="200" >
+    <defs>
+    <style type="text/css"><![CDATA[
+        .pesticides-icon {
+            stroke: #27496d;
+            fill: transparent;
+        }
+    ]]>
+    </style>
+    </defs>
+    <g class="pesticides-icon">
+        <circle cx="100" cy="100" r="90" stroke-width="15" id="ring"/>
+        <path d="M100 150 H 70 Q 65 145 65 141 V 100 L 80 80" stroke-width="5" id="pesticides"/>
+        <use x="1" y="-1" href="#pesticides" transform="scale(-1, 1), translate(-200, 1)"/>
+        <rect x="80" y="70" stroke-width="5" width="40" height="10"/>
+        <path d="M 72 70 V 61 L 85 55 H127 V 64 L 120 70 H 69.5 M 135 53 V 63" stroke-width="5"/>
+        <line x1="40" y1="170" x2="160" y2="30" stroke-width="15" id="ban-line"/> 
+    </g>
+</svg>
+
+<!-- rgb(56, 56, 56) -->

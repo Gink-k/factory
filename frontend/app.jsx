@@ -11,16 +11,32 @@ function App(props) {
             <div className="content-container">
                 <Intro content={response.content.intro}/>
                 <Projects content={response.content.projects}/>
+                <Science content={response.content.science}/>
+                <Partners content={response.content.partners}/>
             </div>
         )
     }
 }
 
+// #################
+// Top level Section
+// #################
+
 function Intro(props) {
-    const text = props.content.text
+    const main = React.useRef()
+    const content = props.content || {}
+    const related_content = content.related_content || []
+    const text = content.text
+    React.useEffect(() => {
+        for (let elem of main.current.children) {
+            addAnimation(elem, `1.8s fade-in ease`)
+        }
+    }, [])
     return (
-        <Section className="intro" data-animate-section>
-            <h1>{text}</h1>
+        <Section _ref={main} className="intro" id="intro">
+            <div className="text-wrap">
+                <h1>{text}</h1>
+            </div>
             <article>
                 <Garden/>
             </article>
@@ -47,6 +63,10 @@ function Flower(props) {
     )
 }
 
+// #################
+// Top level Section
+// #################
+
 function Projects(props) {
     const showDuration = 10000
     const content = props.content || {}
@@ -70,22 +90,134 @@ function Projects(props) {
         setCurrProject(nextProject)
     }
     return (
-        <Section className="projects" data-animate-section>
-            <aside>
-                <div>
-                    <NavArrow direction="next" handleClick={() => handePrNavButtonClick(currProject, "next")}/>
-                    <NavArrow direction="prev" handleClick={() => handePrNavButtonClick(currProject, "prev")}/>
-                    <Project content={currProject}>
-                        <ProgressBar contentId={currProject.ID} duration={showDuration}/>
-                    </Project>
-                </div>
-            </aside>
-            <article>
-                {content.text}
-            </article>
+        <Section className="projects" id="projects">
+            <Project header={content.text} content={currProject}>
+                <Slider imageName={currProject.title} 
+                    handlePrevClick={() => handePrNavButtonClick(currProject, "prev")} 
+                    handleNextClick={() => handePrNavButtonClick(currProject, "next")}>
+                    <ProgressBar contentId={currProject.ID} duration={showDuration}/>
+                </Slider>        
+            </Project>
         </Section>
     )
 }
+
+function Project(props) {
+    const content = props.content || {}
+    return (
+        <React.Fragment>
+            <aside>
+                {props.children}
+            </aside>
+            <article>
+                <h1>{props.header}</h1>
+                <h2>{content.title}</h2>
+                <p>{content.text}</p>
+            </article>
+        </React.Fragment>
+    )
+}
+
+function Slider(props) {
+    return (
+        <div>
+            <NavArrow direction="next" handleClick={props.handleNextClick}/>
+            <NavArrow direction="prev" handleClick={props.handlePrevClick}/>
+            <a className="project">
+                <BackgroundImage name={props.imageName+".jpg"}/>
+                {props.children}
+            </a>
+        </div>
+    )
+}
+
+// #################
+// Top level Section
+// #################
+
+function Science(props) {
+    const content = props.content || {}
+    const related_content = content.related_content || []
+    return (
+        <Section className="science" id="science">
+            <h1>WGarden regulations:</h1>
+            <ul>
+                {related_content.map(value => {
+                    return <Paragraph content={value} key={value.ID}/>
+                })}
+            </ul>
+        </Section>
+    )
+}
+
+function Paragraph(props) {
+    const content = props.content || {}
+    return (
+        <ListItem title={content.title} text={content.text} imageName={content.title} data-animation={`1.8s fade-in ease forwards`}/>
+    )
+}
+
+// #################
+// Top level Section
+// #################
+
+function Partners(props) {
+    const content = props.content || {}
+    const related_content = content.related_content || []
+    return (
+        <Section className="partners">
+            <h1>{content.text}</h1>
+            <ul>
+                {related_content.map(value => {
+                    return <ListItem imageName={value.text} key={value.ID}/>
+                })}
+            </ul>
+        </Section>
+    )
+}
+
+// #################
+// Top level Section
+// #################
+
+function Connections(props) {
+
+}
+
+function Image(props) {
+    const {name, className, ...rest} = props
+    return <img src={IMAGE_STORAGE + name} className={className} {...rest}/>
+}
+
+function BackgroundImage(props) {
+    const className = props.className && props.className + " image-div" || "image-div" 
+    return <div style={{"backgroundImage" : `url("${IMAGE_STORAGE}${props.name}")`}} className={className}></div>
+}
+
+function Section(props) {
+    const {className, children, _ref, ...rest} = props
+    return <section className={className + " section"} ref={_ref} {...rest} data-animate-section>{children}</section>
+}
+
+function ListItem(props) {
+    const {title, text, imageName, ...rest} = props,
+          lTitle = title && <h2>{props.title}</h2>,
+          lImage = imageName && <BackgroundImage name={imageName + "_icon.svg"}/>,
+          lText  = text && <p>{text}</p>
+    return (
+        <li {...rest}>
+            {lTitle}
+            {lImage}
+            {lText}
+        </li>
+    )
+}
+
+// function SectionContent(props) {
+//     return (
+
+//     )
+// }
 
 function NavArrow(props) {
     const className  = props.direction + "-arrow arrow-btn"
@@ -99,33 +231,6 @@ function NavArrow(props) {
             <Image name={"arrow.svg"} style={style}/>
         </a>
     )
-}
-
-function Project(props) {
-    const content = props.content || {} 
-    return (
-        <a className="project">
-            <h2>{content.title}</h2>
-            <BackgroundImage name={content.title}/>
-            <p>{content.text}</p>
-            {props.children}
-        </a>
-    )
-}
-
-function Image(props) {
-    const {name, className, ...rest} = props
-    return <img src={IMAGE_STORAGE + name} className={className} {...rest}/>
-}
-
-function BackgroundImage(props) {
-    const className = props.className && props.className + " image-div" || "image-div" 
-    return <div style={{"backgroundImage" : `url("${IMAGE_STORAGE}${props.name}.jpg")`}} className={className}></div>
-}
-
-function Section(props) {
-    const {className, children, ...rest} = props
-    return <section className={className + " section"} {...rest}>{children}</section>
 }
 
 function ProgressBar(props) {
@@ -193,7 +298,7 @@ window.addEventListener("scroll", () => {
         }
         section.querySelectorAll("*[data-animation]").forEach((animateElem) => {
             const animation = animateElem.dataset.animation
-            addAnimation(animateElem, animation) 
+            addAnimation(animateElem, animation)
         })
     })
 })

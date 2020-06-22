@@ -1,7 +1,7 @@
 package main
 
 import (
-	"factory/controllers"
+	"factory/handlers"
 	"log"
 	"net/http"
 	"text/template"
@@ -45,6 +45,6 @@ func main() {
 	fileServer = http.FileServer(http.Dir("static"))
 	http.Handle("/static/", http.StripPrefix("/static/", fileServer))
 	http.HandleFunc("/", appHandler)
-	http.HandleFunc("/api/content", controllers.ViewAllContent)
+	http.HandleFunc("/api/content", handlers.ViewAllContent)
 	log.Fatal(http.ListenAndServe(":8000", nil))
 }
