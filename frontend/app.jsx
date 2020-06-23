@@ -33,7 +33,7 @@ function Intro(props) {
         }
     }, [])
     return (
-        <Section _ref={main} className="intro" id="intro">
+        <Section _ref={main} className="intro">
             <div className="text-wrap">
                 <h1>{text}</h1>
             </div>
@@ -90,7 +90,7 @@ function Projects(props) {
         setCurrProject(nextProject)
     }
     return (
-        <Section className="projects" id="projects">
+        <Section className="projects">
             <Project header={content.text} content={currProject}>
                 <Slider imageName={currProject.title} 
                     handlePrevClick={() => handePrNavButtonClick(currProject, "prev")} 
@@ -139,7 +139,7 @@ function Science(props) {
     const content = props.content || {}
     const related_content = content.related_content || []
     return (
-        <Section className="science" id="science">
+        <Section className="science">
             <List title="WGarden regulations:" items={related_content} specListItemComponent={Paragraph}/>
         </Section>
     )
@@ -201,7 +201,13 @@ function BackgroundImage(props) {
 
 function Section(props) {
     const {className, children, _ref, ...rest} = props
-    return <section className={className + " section"} ref={_ref} {...rest} data-animate-section>{children}</section>
+    React.useEffect(() => {
+        if ("#" + className == window.location.hash) {
+            document.querySelector("."+className).scrollIntoView()//{"behavior": "smooth"})
+            console.log(1)
+        }
+    }, [])
+    return <section className={className + " section"} id={className} ref={_ref} {...rest} data-animate-section>{children}</section>
 }
 
 function List(props) {
@@ -333,8 +339,8 @@ function addAnimation(elem, cssAnimation) {
 
 function onWindow(elem) {
     const yOffsetBot = pageYOffset + window.innerHeight,
-          bBorder = elem.offsetTop + elem.offsetHeight - 5,
-          tBorder = elem.offsetTop + 5
+          bBorder = elem.offsetTop + elem.offsetHeight,
+          tBorder = elem.offsetTop
     return (pageYOffset < bBorder && tBorder < yOffsetBot)
 }
 
