@@ -13,6 +13,7 @@ function App(props) {
                 <Projects content={response.content.projects}/>
                 <Science content={response.content.science}/>
                 <Partners content={response.content.partners}/>
+                <Footer content={response.content.footer}/>
             </div>
         )
     }
@@ -148,7 +149,7 @@ function Science(props) {
 function Paragraph(props) {
     const content = props.content || {}
     return (
-        <ListItem title={content.title} text={content.text} imageName={content.title} data-animation={`1.8s fade-in ease forwards`}/>
+        <ListItem content={{"imageName": content.title, ...content}} data-animation={`1.8s fade-in ease forwards`}/>
     )
 }
 
@@ -161,7 +162,7 @@ function Partners(props) {
     const related_content = content.related_content || []
     return (
         <Section className="partners">
-            <List title={content.text} items={related_content}/>
+            <List title={content.title} items={related_content}/>
         </Section>
     )
 }
@@ -175,7 +176,7 @@ function News(props) {
     const related_content = content.related_content || []
     return (
         <Section className="news">
-            <List title={content.title} items={related_content}/>
+            <List content={content} items={related_content}/>
         </Section>
     )    
 }
@@ -187,6 +188,29 @@ function News(props) {
 
 function Connections(props) {
 
+}
+
+// #################
+// Top level Section
+// #################
+
+function Footer(props) {
+    const content = props.content || {}
+    const related_content = content.related_content || []
+    return (
+        <footer className="footer section" id="footer">
+            {related_content.map(newList => {
+                return <List items={newList.footerCol} specListItemComponent={Link} key={newList.ID}/>
+            })}
+        </footer>
+    )
+}
+
+function Link(props) {
+    const content = props.content || {}
+    return (
+        <ListItem content={{"text": <a href={content.href}>{content.text}</a>}}/>
+    )
 }
 
 function Image(props) {
@@ -212,13 +236,13 @@ function Section(props) {
 
 function List(props) {
     const title = props.title && <h1>{props.title}</h1> 
-    const SpLiComp = props.specListItemComponent
+    const ListUnit = props.specListItemComponent || ListItem
     return (
         <React.Fragment>
             {title}
             <ul>
                 {props.items.map(value => {
-                    return SpLiComp && <SpLiComp content={value}/> || <ListItem imageName={value.text} key={value.ID}/>
+                    return <ListUnit content={value} key={value.ID}/>
                 })}
             </ul>
         </React.Fragment>
@@ -226,8 +250,9 @@ function List(props) {
 }
 
 function ListItem(props) {
-    const {title, text, imageName, ...rest} = props,
-          lTitle = title && <h2>{props.title}</h2>,
+    const {content, ...rest} = props,
+          {title, text, imageName} = content,
+          lTitle = title && <h2>{title}</h2>,
           lImage = imageName && <BackgroundImage name={imageName + "_icon.svg"}/>,
           lText  = text && <p>{text}</p>
     return (

@@ -7,6 +7,10 @@ body {
     font-family: 'Montserrat Alternates', sans-serif;
 }
 
+a {
+    text-decoration: none;
+}
+
 ul {
     list-style-type: none;
 }
@@ -268,6 +272,23 @@ a.next-arrow {
     background-size: contain;
     background-repeat: no-repeat;
     background-position: center;
+}
+
+/*############################################################################ */
+/*############################################################################ */
+/*############################################################################ */
+
+.footer {
+    background-color: rgb(51, 58, 66);
+}
+
+.footer ul {
+    display: inline-block;
+    vertical-align: top;
+}
+
+.footer li {
+    padding: 4px 20px
 }
 
 /*############################################################################ */

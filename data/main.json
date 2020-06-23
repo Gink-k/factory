@@ -28,20 +28,40 @@
     },
     "partners": {
         "ID": 4,
-        "text": "Наши партнеры:",
+        "title": "Наши партнеры:",
         "related_content": [
-            {"ID": 18, "title": "Гагпром", "text": "gagprom"},
-            {"ID": 19, "title": "Краснодар сад", "text": "krasnodarSad"},
-            {"ID": 20, "title": "Гагпром", "text": "gagprom"},
-            {"ID": 21, "title": "Гагпром", "text": "gagprom"},
-            {"ID": 22, "title": "Гагпром", "text": "gagprom"},
-            {"ID": 23, "title": "Гагпром", "text": "gagprom"}
+            {"ID": 18, "imageName": "gagprom"},
+            {"ID": 19, "imageName": "krasnodarSad"},
+            {"ID": 20, "imageName": "gagprom"},
+            {"ID": 21, "imageName": "gagprom"},
+            {"ID": 22, "imageName": "gagprom"},
+            {"ID": 23, "imageName": "gagprom"}
         ]
     },
     "news": {
 
     },
-    "connection": {
-
+    "footer": {
+        "ID": 6,
+        "related_content": [
+            {
+                "footerCol": [
+                        {"ID": 24, "href":"/Questions", "text": "Вопросы"},
+                        {"ID": 25, "href":"/Questions", "text": "Вопросы"},
+                        {"ID": 26, "href":"/Questions", "text": "Вопросы"},
+                        {"ID": 27, "href":"/Questions", "text": "Вопросы"},
+                        {"ID": 28, "href":"/Questions", "text": "Вопросы"}
+                    ],
+                "ID": 32
+            },
+            {
+                "footerCol": [
+                        {"ID": 29, "href":"/Questions", "text": "Оптовая торголя"},
+                        {"ID": 30, "href":"/Questions", "text": "Скидки"},
+                        {"ID": 31, "href":"/Questions", "text": "Продукты"}
+                    ],
+                "ID": 33
+            }
+        ]
     }
 }
