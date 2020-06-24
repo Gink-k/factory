@@ -13,8 +13,10 @@ function App(props) {
                 <Intro content={content.intro}/>
                 <Projects content={content.projects}/>
                 <Science content={content.science}/>
-                <Partners content={content.partners}/>
-                <News content={content.news}/>
+                <div className="pa-ne general-back">    
+                    <Partners content={content.partners}/>
+                    <News content={content.news}/>
+                </div>
                 <Footer content={content.footer}/>
             </div>
         )

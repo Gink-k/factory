@@ -246,6 +246,12 @@ a.next-arrow {
 /*############################################################################ */
 /*############################################################################ */
 
+.pa-ne {
+    background-image: url(../images/lenta3.svg);
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
 .partners {
     min-height: 100vh;
 }
@@ -283,7 +289,6 @@ a.next-arrow {
 /*############################################################################ */
 
 .news {
-
 }
 
 .news ul {
@@ -301,7 +306,9 @@ a.next-arrow {
     margin: 40px;
     padding: 1em;
     overflow: hidden;
-    border: 2px solid #DAE1E7;
+    background-color: white;
+    box-shadow: 0px 0px 3px 1px #142850;
+    /* border: 2px solid #DAE1E7; */
     /* border-radius: 20px; */
 }
 
