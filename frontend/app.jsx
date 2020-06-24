@@ -6,14 +6,16 @@ function App(props) {
         return <div>Произошла ошибка, пожалуйста, попробуйте перезагрузить страницу!</div>
     } else if (!isLoaded) {
         return <div>Идет загрузка</div>
-    } else { 
+    } else {
+        const content = response.content
         return (
             <div className="content-container">
-                <Intro content={response.content.intro}/>
-                <Projects content={response.content.projects}/>
-                <Science content={response.content.science}/>
-                <Partners content={response.content.partners}/>
-                <Footer content={response.content.footer}/>
+                <Intro content={content.intro}/>
+                <Projects content={content.projects}/>
+                <Science content={content.science}/>
+                <Partners content={content.partners}/>
+                <News content={content.news}/>
+                <Footer content={content.footer}/>
             </div>
         )
     }
@@ -176,7 +178,7 @@ function News(props) {
     const related_content = content.related_content || []
     return (
         <Section className="news">
-            <List content={content} items={related_content}/>
+            <List title={content.title} items={related_content}/>
         </Section>
     )    
 }
