@@ -54,20 +54,20 @@
         "ID": 6,
         "related_content": [
             {
-                "footerCol": [
-                        {"ID": 1, "href":"/Questions", "text": "Вопросы"},
-                        {"ID": 2, "href":"/Questions", "text": "Вопросы"},
-                        {"ID": 3, "href":"/Questions", "text": "Вопросы"},
-                        {"ID": 4, "href":"/Questions", "text": "Вопросы"},
-                        {"ID": 5, "href":"/Questions", "text": "Вопросы"}
+                "related_content": [
+                        {"ID": 1, "title":"/Questions", "text": "Вопросы"},
+                        {"ID": 2, "title":"/Questions", "text": "Вопросы"},
+                        {"ID": 3, "title":"/Questions", "text": "Вопросы"},
+                        {"ID": 4, "title":"/Questions", "text": "Вопросы"},
+                        {"ID": 5, "title":"/Questions", "text": "Вопросы"}
                     ],
                 "ID": 1
             },
             {
-                "footerCol": [
-                        {"ID": 1, "href":"/Questions", "text": "Оптовая торголя"},
-                        {"ID": 2, "href":"/Questions", "text": "Скидки"},
-                        {"ID": 3, "href":"/Questions", "text": "Продукты"}
+                "related_content": [
+                        {"ID": 1, "title":"/Questions", "text": "Оптовая торголя"},
+                        {"ID": 2, "title":"/Questions", "text": "Скидки"},
+                        {"ID": 3, "title":"/Questions", "text": "Продукты"}
                     ],
                 "ID": 2
             }

@@ -11,25 +11,11 @@ func ViewContent(w http.ResponseWriter, r *http.Request) {
 }
 
 func EditContent(w http.ResponseWriter, r *http.Request) {
-	content := &models.Content{}
-	err := decodeRequest(r, content)
-	if err != nil {
-		http.Error(w, err.Error(), http.StatusBadRequest)
-		return
-	}
-	resp := content.Edit()
-	u.Respond(w, resp)
+
 }
 
 func CreateContent(w http.ResponseWriter, r *http.Request) {
-	content := &models.Content{}
-	err := decodeRequest(r, content)
-	if err != nil {
-		http.Error(w, err.Error(), http.StatusBadRequest)
-		return
-	}
-	resp := content.Create()
-	u.Respond(w, resp)
+
 }
 
 func DeleteContent(w http.ResponseWriter, r *http.Request) {
@@ -37,7 +23,7 @@ func DeleteContent(w http.ResponseWriter, r *http.Request) {
 }
 
 func ViewAllContent(w http.ResponseWriter, r *http.Request) {
-	content, err := readJSON("data/main.json")
+	content, err := models.GetSectionsContent()
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
 		return

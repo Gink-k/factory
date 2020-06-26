@@ -4,21 +4,22 @@ import (
 	"encoding/json"
 	"errors"
 	"factory/models"
-	"io/ioutil"
 	"net/http"
+	"text/template"
 )
 
-func decodeRequest(r *http.Request, content *models.Content) error {
+var templates = template.Must(template.New("tmpl").ParseGlob("tmpl/*"))
+
+func renderTemplate(w http.ResponseWriter, tmpl string, data map[string]interface{}) {
+	err := templates.ExecuteTemplate(w, tmpl+".html", data)
+	if err != nil {
+		http.Error(w, err.Error(), http.StatusInternalServerError)
+	}
+}
+
+func decodeRequest(r *http.Request, content *models.SectionsContent) error {
 	if r.Header.Get("Content-Type") == "application/json" {
 		return json.NewDecoder(r.Body).Decode(content)
 	}
-	msg := "Content-Type header is not application/json"
-	return errors.New(msg)
-}
-
-func readJSON(filename string) (interface{}, error) {
-	content, _ := ioutil.ReadFile(filename)
-	var data interface{}
-	err := json.Unmarshal(content, &data)
-	return data, err
+	return errors.New("Content-Type header is not application/json")
 }
