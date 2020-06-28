@@ -4,47 +4,77 @@ import (
 	"factory/handlers"
 	"log"
 	"net/http"
-	"text/template"
+	"regexp"
 )
 
-const (
-	cdnReact           = "https://unpkg.com/react@16.13.0/umd/react.production.min.js"
-	cdnReactDom        = "https://unpkg.com/react-dom@16.13.0/umd/react-dom.production.min.js"
-	cdnBabelStandalone = "https://unpkg.com/babel-standalone@6.26.0/babel.min.js"
-)
+type route struct {
+	pattern *regexp.Regexp
+	handler http.Handler
+	methods []string
+}
 
-const indexHTML = `
-<!DOCTYPE HTML>
-<html>
-  <head>
-    <meta charset="utf-8">
-    <title>Simple Go Web App</title>
-  </head>
-  <body>
-    <div id='root'></div>
-    <script src="` + cdnReact + `"></script>
-    <script src="` + cdnReactDom + `"></script>
-    <script src="` + cdnBabelStandalone + `"></script>
-	<script src="/frontend/app.jsx" type="text/babel"></script>
-	<link href="/static/stylesheets/styles.css" rel="stylesheet">
-  </body>
-</html>
-`
+type RegexpHandler struct {
+	routes []*route
+}
 
-var appTemplate = template.Must(template.New("tmpl").Parse(indexHTML))
+func (h *RegexpHandler) Methods(methods ...string) *RegexpHandler {
+	h.routes[len(h.routes)-1].methods = methods
+	return h
+}
 
-func appHandler(w http.ResponseWriter, r *http.Request) {
-	appTemplate.Execute(w, nil)
-	return
+func (h *RegexpHandler) Handler(strPattern string, handler http.Handler) *RegexpHandler {
+	pattern := mustCompile(strPattern)
+	h.routes = append(h.routes, &route{pattern, handler, nil})
+	return h
+}
+
+func (h *RegexpHandler) HandleFunc(strPattern string, handler func(http.ResponseWriter, *http.Request)) *RegexpHandler {
+	pattern := mustCompile(strPattern)
+	h.routes = append(h.routes, &route{pattern, http.HandlerFunc(handler), nil})
+	return h
+}
+
+func (h *RegexpHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
+	for _, route := range h.routes {
+		if route.pattern.MatchString(r.URL.Path) {
+			if route.containMethod(r.Method) {
+				route.handler.ServeHTTP(w, r)
+				return
+			}
+		}
+	}
+	// no pattern matched; send 404 response
+	http.HandlerFunc(handlers.MakeHandler("other")).ServeHTTP(w, r)
+}
+
+func mustCompile(pattern string) *regexp.Regexp {
+	return regexp.MustCompile("^" + pattern + "$")
+}
+
+func (r *route) containMethod(method string) bool {
+	if len(r.methods) == 0 && method == "GET" {
+		return true
+	}
+	for _, m := range r.methods {
+		if m == method {
+			return true
+		}
+	}
+	return false
 }
 
 func main() {
-	//
+	router := RegexpHandler{}
 	fileServer := http.FileServer(http.Dir("frontend"))
-	http.Handle("/frontend/", http.StripPrefix("/frontend/", fileServer))
+	router.Handler("/frontend/.*", http.StripPrefix("/frontend/", fileServer))
 	fileServer = http.FileServer(http.Dir("static"))
-	http.Handle("/static/", http.StripPrefix("/static/", fileServer))
-	http.HandleFunc("/", appHandler)
-	http.HandleFunc("/api/content", handlers.ViewAllContent)
-	log.Fatal(http.ListenAndServe(":8000", nil))
+	router.Handler("/static/.*", http.StripPrefix("/static/", fileServer))
+	router.HandleFunc("/", handlers.MakeHandler("index"))
+	router.HandleFunc("/admin", handlers.MakeHandler("admin"))
+	router.HandleFunc("/api/content", handlers.ViewAllContent).Methods("GET")
+	router.HandleFunc("/api/content", handlers.EditContent).Methods("PUT")
+	router.HandleFunc("/news/[1-9][0-9]*", handlers.MakeHandler("news"))
+	router.HandleFunc("/api/news", handlers.GetNews)
+	router.HandleFunc("/api/content", handlers.EditContent)
+	log.Fatal(http.ListenAndServe(":8000", &router))
 }

@@ -3,6 +3,7 @@ package handlers
 import (
 	"factory/models"
 	u "factory/utils"
+	"log"
 	"net/http"
 )
 
@@ -11,25 +12,22 @@ func ViewContent(w http.ResponseWriter, r *http.Request) {
 }
 
 func EditContent(w http.ResponseWriter, r *http.Request) {
-	content := &models.Content{}
+	content := &models.SectionsContent{}
 	err := decodeRequest(r, content)
 	if err != nil {
-		http.Error(w, err.Error(), http.StatusBadRequest)
+		log.Println(err.Error(), r.Body)
+		log.Printf("%T, %v", r.Body, r.Body)
+		http.Error(w, err.Error(), http.StatusInternalServerError)
 		return
 	}
-	resp := content.Edit()
-	u.Respond(w, resp)
+	content.Edit()
+	response := u.Message(u.SUCCESS, "Content has been edited")
+	response["content"] = content
+	u.Respond(w, response)
 }
 
 func CreateContent(w http.ResponseWriter, r *http.Request) {
-	content := &models.Content{}
-	err := decodeRequest(r, content)
-	if err != nil {
-		http.Error(w, err.Error(), http.StatusBadRequest)
-		return
-	}
-	resp := content.Create()
-	u.Respond(w, resp)
+
 }
 
 func DeleteContent(w http.ResponseWriter, r *http.Request) {
@@ -37,7 +35,7 @@ func DeleteContent(w http.ResponseWriter, r *http.Request) {
 }
 
 func ViewAllContent(w http.ResponseWriter, r *http.Request) {
-	content, err := readJSON("data/main.json")
+	content, err := models.GetSectionsContent()
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
 		return
