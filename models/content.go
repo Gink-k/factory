@@ -9,6 +9,7 @@ type Content struct {
 	ID             uint
 	Title          string    `json:"title"`
 	Text           string    `json:"text"`
+	Href           string    `json:"href"`
 	ImageName      string    `json:"imageName"`
 	RelatedContent []Content `json:"related_content"`
 }

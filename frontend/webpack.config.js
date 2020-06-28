@@ -4,6 +4,7 @@ module.exports = {
   entry: {
       app: "./src/app.jsx",
       news: "./src/news.jsx",
+      admin: "./src/admin.jsx",
       other: "./src/other.jsx",
   },
   output: {

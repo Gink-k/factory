@@ -15,10 +15,9 @@ function App(props) {
                 <Intro content={content.intro}/>
                 <Projects content={content.projects}/>
                 <Science content={content.science}/>
-                <div className="pa-ne general-back">    
-                    <Partners content={content.partners}/>
-                    <News content={content.news}/>
-                </div>
+                <Partners content={content.partners}/>
+                <News content={content.news}/>
+                <Connections content={content.connections}/>
                 <Footer content={content.footer}/>
             </div>
         )
@@ -143,7 +142,7 @@ function Science(props) {
     const content = props.content || {}
     const related_content = content.related_content || []
     return (
-        <Section className="science" title="WGarden regulations:">
+        <Section className="science" title={content.title}>
             <List items={related_content} specListItemComponent={Paragraph}/>
         </Section>
     )
@@ -165,7 +164,7 @@ function Partners(props) {
     const related_content = content.related_content || []
     return (
         <Section className="partners" title={content.title}>
-            <List items={related_content}/>
+            <List items={related_content} specListItemComponent={LinkListItem}/>
         </Section>
     )
 }
@@ -175,12 +174,29 @@ function Partners(props) {
 // #################
 
 function News(props) {
-    const content = props.content || {}
+    const content         = props.content || {}
     const related_content = content.related_content || []
+    const maxAmount       = 6
     related_content.forEach(elem => {elem.href = `/news/${elem.ID}`})
+    const news = related_content.slice(0, maxAmount)
+    const btnTextShow = "Показать все новости", btnTextHide = "Скрыть"
+    const [currentNewsSlice, setCurrentNewsSlice] = React.useState({"news": news, "buttonText": btnTextShow})
+    const handleClick = (e) => {
+        e.preventDefault()
+        if(currentNewsSlice.buttonText == btnTextShow) {
+            setCurrentNewsSlice({"news": related_content, "buttonText": btnTextHide})
+        } else {
+            setCurrentNewsSlice({"news": news, "buttonText": btnTextShow})
+        }
+    }
     return (
         <Section className="news" title={content.title}>
-            <List items={related_content} specListItemComponent={LinkListItem}/>
+            <div>
+                <List items={currentNewsSlice.news} specListItemComponent={LinkListItem}/>
+                <div className="btn-wrap">
+                    <a className="btn" onClick={handleClick}>{currentNewsSlice.buttonText}</a>
+                </div>
+            </div>
         </Section>
     )    
 }
@@ -191,7 +207,14 @@ function News(props) {
 
 
 function Connections(props) {
+    const content         = props.content || {}
+    const related_content = content.related_content || []
 
+    return (
+        <Section className="connections" title={content.title}>
+            <List items={related_content}/>
+        </Section>
+    )
 }
 
 // #################
@@ -204,8 +227,12 @@ function Footer(props) {
     return (
         <footer className="footer section" id="footer">
             {related_content.map(newList => {
-                newList.related_content.forEach(elem => {elem.href = elem.title; elem.title = ""})
-                return <List items={newList.related_content} specListItemComponent={LinkListItem} key={newList.ID}/>
+                return (
+                    <div key={newList.ID}>    
+                        <h4>{newList.title}</h4>
+                        <List items={newList.related_content} specListItemComponent={LinkListItem}/>
+                    </div>
+                )
             })}
         </footer>
     )

@@ -257,16 +257,13 @@ a.next-arrow {
 /*############################################################################ */
 /*############################################################################ */
 
-.pa-ne {
+.partners {
+    min-height: 75vh;
     background-image: url(../images/lenta4.svg);
     background-repeat: no-repeat;
     background-size: cover;
     background-attachment: scroll;
     background-position-x: right;
-}
-
-.partners {
-    min-height: 100vh;
 }
 
 .partners h1 {
@@ -283,6 +280,7 @@ a.next-arrow {
     color: black;
     font-size: 1.5em;
     border: 1px solid silver;
+    background-color: white;
     border-left: none;
 }
 
@@ -299,12 +297,35 @@ a.next-arrow {
 /*############################################################################ */
 
 .news {
+    min-height: 100vh;
+    padding-bottom: 0;
+}
+
+.news > div {
+    text-align: center;
+}
+
+.news .btn-wrap {
+    background-color: white;
+    padding: 4em 0;
+}
+
+.news .btn {
+    display: inline-block;
+    font-size: 1.4em;
+    font-weight: bold;
+    padding: 0.7em;
+    border-radius: 5px;
+    background-color: #142850;
 }
 
 .news ul {
     /* border-left: 1px solid silver; */
-    text-align: center;
     color: black;
+    background-image: linear-gradient(to bottom, white 50%, #00909E 50%, #00909E 100%);
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-attachment: fixed;
 }
 
 .news li a {
@@ -328,9 +349,11 @@ a.next-arrow {
 }
 
 .news li .image-div {
-    height: 14em;
+    height: 13em;
+    margin-bottom: 1em;
     background-repeat: no-repeat;
     background-size: contain;
+    background-position: center;
 }
 
 .news li h2 {
@@ -366,17 +389,40 @@ a.next-arrow {
 /*############################################################################ */
 /*############################################################################ */
 
+.connections {
+    min-height: 75vh;
+    background-color: #00909E;
+    /* background-image: linear-gradient(to right,#00909E 60px); */
+}
+
+.connections ul {
+    padding: 20px;
+}
+
+.connections li {
+    padding: 15px;
+}
+
+/*############################################################################ */
+/*############################################################################ */
+/*############################################################################ */
+
 .footer {
     background-color: rgb(51, 58, 66);
 }
 
-.footer ul {
+.footer > div {
     display: inline-block;
     vertical-align: top;
+    text-align: left;
+}
+
+.footer ul {
+    margin-right: 5em;
 }
 
 .footer li {
-    padding: 4px 20px
+    padding: 3px 2px 3px 0.2em;
 }
 
 /*############################################################################ */
@@ -510,6 +556,34 @@ a.next-arrow {
     vertical-align: top;
     background-repeat: no-repeat;
     background-size: contain;
+}
+
+/*############################################################################ */
+/*############################################################################ */
+/*                               ADMIN PAGE                                    */
+/*############################################################################ */
+/*############################################################################ */
+
+
+.admin-form * {
+    display: block;
+    padding: 10px;
+    margin-bottom: 10px;
+    color: #000;
+}
+
+.admin-form fieldset {
+    margin-left: 20px;
+}
+
+.admin-form input[type="text"] {
+    width: 400px;
+}
+
+.admin-form textarea {
+    width: 900px;
+    max-width: auto;
+    height: 250px;
 }
 
 /*############################################################################ */

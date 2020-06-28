@@ -9,10 +9,10 @@ export function Logo(props) {
 }
 
 export function List(props) { 
-    const ListUnit  = props.specListItemComponent || ListItem
-    const className = props.className || ""
+    const {className = "", items = [], specListItemComponent, ...rest} = props
+    const ListUnit = specListItemComponent || ListItem
     return (
-        <ul className={className}>
+        <ul {...rest} className={className}>
             {props.items.map(value => {
                 return <ListUnit content={value} key={value.ID}/>
             })}
