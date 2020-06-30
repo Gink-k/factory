@@ -44,7 +44,7 @@ export function LinkListItem(props) {
 export function Article(props) {
     const {title, imageName, text} = props,
           aTitle = title && <h2>{title}</h2>,
-          aImage = imageName && <BackgroundImage name={imageName + "_icon.svg"}/>,
+          aImage = imageName && <BackgroundImage name={imageName}/>,
           aText  = text && <p>{text}</p>
     return (
         <React.Fragment>

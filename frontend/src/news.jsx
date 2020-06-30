@@ -11,10 +11,12 @@ function News(props) {
     } else {
         let articles = response.news.related_content
         let currArticleIndex = -1
-        const currArticleID = getCurrentArticleID()
+        const currArticleID = +getCurrentArticleID()
         const currArticle   = articles.find((elem, index) => { 
-            return elem.ID == currArticleID && (currArticleIndex = index)
+            currArticleIndex = index
+            return elem.ID == currArticleID
         })
+        console.log(currArticle, currArticleIndex, currArticleID, articles)
         articles.splice(currArticleIndex, 1)
         return (
             <div>

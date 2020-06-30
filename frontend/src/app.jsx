@@ -31,14 +31,14 @@ function App(props) {
 function Intro(props) {
     const content = props.content || {}
     const related_content = content.related_content || []
-    const text = content.text
+    const text = content.text, logo = content.title
     const addAnimationOnLoad = React.useCallback(node => {
-        if (node !== null) for (let elem of node.children) addAnimation(elem, `1.8s fade-in ease`)
+        if (node !== null) for (let elem of node.children) addAnimation(elem, `1.8s fade-in ease forwards`)
     }, [])
     return (
         <Section _ref={addAnimationOnLoad} className="intro">
             <div className="text-wrap">
-                <h1>{text}</h1>
+                <h1><span className="logo">{logo}</span> - {text}</h1>
             </div>
             <article>
                 <Garden/>
@@ -95,8 +95,8 @@ function Projects(props) {
     return (
         <Section className="projects">
             <Project header={content.text} content={currProject}>
-                <Slider imageName={currProject.title} 
-                    handlePrevClick={() => handePrNavButtonClick(currProject, "prev")} 
+                <Slider imageName={currProject.imageName} 
+                    handlePrevClick={() => handePrNavButtonClick(currProject, "prev")}
                     handleNextClick={() => handePrNavButtonClick(currProject, "next")}>
                     <ProgressBar contentId={currProject.ID} duration={showDuration}/>
                 </Slider>        
@@ -108,7 +108,7 @@ function Projects(props) {
 function Project(props) {
     const content = props.content || {}
     return (
-        <React.Fragment>
+        <div>
             <aside>
                 {props.children}
             </aside>
@@ -117,7 +117,7 @@ function Project(props) {
                 <h2>{content.title}</h2>
                 <p>{content.text}</p>
             </article>
-        </React.Fragment>
+        </div>
     )
 }
 
@@ -151,7 +151,7 @@ function Science(props) {
 function Paragraph(props) {
     const content = props.content || {}
     return (
-        <ListItem content={{...content, "imageName": content.title}} data-animation={`1.8s fade-in ease forwards`}/>
+        <ListItem content={{...content, "imageName": content.title + "_icon.svg"}} data-animation={`1.8s fade-in ease forwards`}/>
     )
 }
 
@@ -176,7 +176,7 @@ function Partners(props) {
 function News(props) {
     const content         = props.content || {}
     const related_content = content.related_content || []
-    const maxAmount       = 6
+    const maxAmount       = 4
     related_content.forEach(elem => {elem.href = `/news/${elem.ID}`})
     const news = related_content.slice(0, maxAmount)
     const btnTextShow = "Показать все новости", btnTextHide = "Скрыть"
@@ -302,7 +302,7 @@ window.addEventListener("scroll", () => {
     let duration = 1.8
     document.querySelectorAll("*[data-animate-section]").forEach((section) => {
         for (let elem of section.children) {
-            addAnimation(elem, `${duration}s fade-in ease`)
+            addAnimation(elem, `${duration}s fade-in ease forwards`)
         }
         section.querySelectorAll("*[data-animation]").forEach((animateElem) => {
             const animation = animateElem.dataset.animation

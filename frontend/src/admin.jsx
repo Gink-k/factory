@@ -34,12 +34,11 @@ function EditPanel(props) {
     function handleSubmit(e) {
         const url = "/api/content"
         e.preventDefault()
-        console.log(changedContent)
         fetch(url, {
             body: JSON.stringify(changedContent),
             method: "PUT",
             headers: {'Content-Type': 'application/json'}
-        })
+        }).then(null, error => console.log(error))
     }
     function handleChange(newContent) {
         setChangedContent({...changedContent, ...newContent})
@@ -81,7 +80,7 @@ function Section(props) {
     const title = content.title && <input type="text" name="title" value={fieldsState.title}/>,
           text  = content.text  && <textarea name="text" value={fieldsState.text}/>,
           href  = content.href  && <input type="text" name="href" value={fieldsState.href}/>,
-          imageName = content.imageName && <input type="file" name="imageFile" accept="image/*"/>,
+          //imageName = content.imageName && <input type="file" name="imageFile" accept="image/*"/>,
           related_content = content.related_content && (content.related_content.map(rel => 
                     <Section key={rel.ID} content={rel} name="related_content" readOnly={props.readOnly} handleChange={handleRelContentChange}/>
                 )
@@ -92,7 +91,6 @@ function Section(props) {
             {title}
             {text}
             {href}
-            {imageName}
             {related_content}
         </ManagedFieldSet>
     )  

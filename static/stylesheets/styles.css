@@ -1,3 +1,10 @@
+/*
+* Prefixed by https://autoprefixer.github.io
+* PostCSS: v7.0.29,
+* Autoprefixer: v9.7.6
+* Browsers: last 4 version
+*/
+
 * {
     margin: 0px;
     padding: 0px;
@@ -29,9 +36,14 @@ ul {
 
 .section {
     font-family: Proxima Nova, Helvetica Neue, Helvetica, Roboto, Arial, sans-serif;
-    box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+            box-sizing: border-box;
     width: 100%;
     padding: 60px;
+}
+
+.section > * {
+    opacity: 0;
 }
 
 .section > h1:first-child {
@@ -49,16 +61,17 @@ ul {
 
 .intro {
     height: 110vh;
-    min-height: 645px;
+    min-height: 838px;
     background-color: #142850;
     text-align: center;
     padding-bottom: 10vh;
 }
 
 .intro .text-wrap {
-    box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+            box-sizing: border-box;
     height: 40%;
-    padding-top: 12%;
+    padding-top: 25vh;
 }
 
 .intro h1 {
@@ -92,7 +105,23 @@ ul {
 .stem-wrap img {
     position: absolute;
     bottom: 0px;
+    -webkit-transition: top 3s ease 0s;
+    -o-transition: top 3s ease 0s;
     transition: top 3s ease 0s;
+}
+
+@media all and (max-device-width: 600px) {
+    .intro h1 {
+        font-size: 4em;
+    }
+    .stem-wrap {
+        margin: 0 80px;
+    }
+    .stem-wrap img {
+        -webkit-transform: scale(2) translateY(-160px);
+            -ms-transform: scale(2) translateY(-160px);
+                transform: scale(2) translateY(-160px);
+    }
 }
 
 /*############################################################################ */
@@ -129,10 +158,12 @@ ul {
 }
 
 .projects aside {
+    position: relative;
     float: right;
     width: 40%;
     min-width: 500px;
     margin-left: 5em;
+    z-index: 10000;
 }
 
 .projects aside > div {
@@ -162,6 +193,10 @@ a.next-arrow {
     margin-left: 15%;
     margin-bottom: 20px;
     vertical-align: top;
+}
+
+.project:hover {
+    cursor: auto;
 }
 
 .project .image-div {
@@ -194,6 +229,8 @@ a.next-arrow {
 .progress-bar div {
     width: 0;
     height: 5px;
+    background-image: -webkit-gradient(linear, left top, right top, from(white), to(#00d800));
+    background-image: -o-linear-gradient(left, white, #00d800);
     background-image: linear-gradient(to right, white, #00d800);
 }
 
@@ -235,7 +272,8 @@ a.next-arrow {
 
 .science li {
     position: relative;
-    box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+            box-sizing: border-box;
     color: black;
     font-size: 1.4em;
     line-height: 1.5em;
@@ -319,9 +357,15 @@ a.next-arrow {
     background-color: #142850;
 }
 
+.news .btn:hover {
+    color: #DAE1E7;
+}
+
 .news ul {
     /* border-left: 1px solid silver; */
     color: black;
+    background-image: -webkit-gradient(linear, left top, left bottom, color-stop(50%, white), color-stop(50%, #00909E), to(#00909E));
+    background-image: -o-linear-gradient(top, white 50%, #00909E 50%, #00909E 100%);
     background-image: linear-gradient(to bottom, white 50%, #00909E 50%, #00909E 100%);
     background-repeat: no-repeat;
     background-size: cover;
@@ -335,21 +379,24 @@ a.next-arrow {
 
 .news li {
     display: inline-block;
-    box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+            box-sizing: border-box;
+    font-size: 1.3em;    
     min-width: 300px;
-    width: calc(33.33% - 160px);
-    height: calc(26em + 4px);
-    margin: 40px;
-    padding: 1em;
+    width: calc(50% - 270px);
+    height: calc(29.5em + 4px);
+    margin: 60px 90px;
+    padding: 1.5em;
     overflow: hidden;
     background-color: white;
-    box-shadow: 0px 0px 3px 1px #142850;
+    -webkit-box-shadow: 0px 0px 3px 0px #142850;
+            box-shadow: 0px 0px 3px 0px #142850;
     /* border: 2px solid #DAE1E7; */
     /* border-radius: 20px; */
 }
 
 .news li .image-div {
-    height: 13em;
+    height: 16em;
     margin-bottom: 1em;
     background-repeat: no-repeat;
     background-size: contain;
@@ -357,12 +404,14 @@ a.next-arrow {
 }
 
 .news li h2 {
-    box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+            box-sizing: border-box;
     padding-bottom: 0.4em;
     font-size: 1.5em;
     line-height: 1.6em;
     height: 2em;
-    text-overflow: ellipsis;
+    -o-text-overflow: ellipsis;
+       text-overflow: ellipsis;
     overflow: hidden;
     white-space: nowrap;
 }
@@ -377,10 +426,17 @@ a.next-arrow {
 .news li p::before {
     content: '...';
     position: absolute;
-    right: 1em;
+    right: -0.1em;
     bottom: 0;
 }
 
+@media all and (max-device-width: 600px) {
+    .news li {
+        width: calc(100% - 160px);
+        height: calc(29em + 4px);
+        font-size: 2.4em;
+    }
+}
 /* .news li p::after {
     content: "...";
 } */
@@ -411,6 +467,10 @@ a.next-arrow {
     background-color: rgb(51, 58, 66);
 }
 
+.footer > * {
+    opacity: 1;
+}
+
 .footer > div {
     display: inline-block;
     vertical-align: top;
@@ -437,7 +497,8 @@ a.next-arrow {
     padding: 5em 1em;
     font-size: 1.5em;
     font-weight: 600;
-    box-shadow: 0px 0px 3px 1px #142850;
+    -webkit-box-shadow: 0px 0px 3px 1px #142850;
+            box-shadow: 0px 0px 3px 1px #142850;
 }
 
 .basic-container {
@@ -472,7 +533,8 @@ a.next-arrow {
     /* border-radius: 80px; */
     background-color: white;
     padding: 0.2em;
-    box-shadow: 0px 0px 10px 2px white;
+    -webkit-box-shadow: 0px 0px 10px 2px white;
+            box-shadow: 0px 0px 10px 2px white;
 }
 
 .link-logo a:hover {
@@ -485,13 +547,15 @@ a.next-arrow {
 
 .main-article {
     display: inline-block;
-    box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+            box-sizing: border-box;
     width: 80%;
     vertical-align: middle;
     text-align: left;
     background-color: white;
     padding: 3em;
-    box-shadow: 0px 0px 3px 1px #142850;
+    -webkit-box-shadow: 0px 0px 3px 1px #142850;
+            box-shadow: 0px 0px 3px 1px #142850;
 }
 
 .main-article h2 {
@@ -517,7 +581,8 @@ a.next-arrow {
 
 .news-list {
     display: inline-block;
-    box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+            box-sizing: border-box;
     width: 15%;
     font-size: 11px;
     text-align: left;
@@ -525,7 +590,8 @@ a.next-arrow {
     background-color: white;
     padding: 1px;
     margin-left: 5%;
-    box-shadow: 0px 0px 3px 1px #142850;
+    -webkit-box-shadow: 0px 0px 3px 1px #142850;
+            box-shadow: 0px 0px 3px 1px #142850;
 }
 
 .news-list li {
@@ -597,7 +663,22 @@ a.next-arrow {
 
 .fade-out {
     opacity: 0;
+    -webkit-transition: opacity 1s ease 0s;
+    -o-transition: opacity 1s ease 0s;
     transition: opacity 1s ease 0s;
+}
+
+@-webkit-keyframes fade-in {
+    from {
+        opacity: 0;
+        top: 50px;
+    }
+    50% {
+        top: 0px;
+    }
+    to {
+        opacity: 1;
+    }
 }
 
 @keyframes fade-in {
@@ -613,9 +694,23 @@ a.next-arrow {
     }
 }
 
+@-webkit-keyframes progress-bar {
+    from {padding-right: 0%;}
+    to {padding-right: 100%;}
+}
+
 @keyframes progress-bar {
     from {padding-right: 0%;}
     to {padding-right: 100%;}
+}
+
+@-webkit-keyframes grow {
+    from {
+        bottom: -160px
+    }
+    to {
+        bottom: 0px;
+    }
 }
 
 @keyframes grow {

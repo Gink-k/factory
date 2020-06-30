@@ -4,6 +4,7 @@ import (
 	"factory/handlers"
 	"log"
 	"net/http"
+	"os"
 	"regexp"
 )
 
@@ -76,5 +77,9 @@ func main() {
 	router.HandleFunc("/news/[1-9][0-9]*", handlers.MakeHandler("news"))
 	router.HandleFunc("/api/news", handlers.GetNews)
 	router.HandleFunc("/api/content", handlers.EditContent)
-	log.Fatal(http.ListenAndServe(":8000", &router))
+	port := os.Getenv("PORT")
+	if port == "" {
+		port = "8000"
+	}
+	log.Fatal(http.ListenAndServe(":"+port, &router))
 }

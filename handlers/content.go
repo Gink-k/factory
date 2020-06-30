@@ -23,6 +23,10 @@ func EditContent(w http.ResponseWriter, r *http.Request) {
 	content.Edit()
 	response := u.Message(u.SUCCESS, "Content has been edited")
 	response["content"] = content
+	w.Header().Add("Allow-control-allow-origin", "*")
+	w.Header().Add("Access-Control-Allow-Methods", "PUT")
+	w.Header().Add("Access-Control-Allow-Headers", "Content-Type")
+	w.Header().Add("Access-Control-Max-Age", "86400")
 	u.Respond(w, response)
 }
 

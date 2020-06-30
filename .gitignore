@@ -1,3 +1,6 @@
 .env
 trash
+main.json
+!/data/main.json
 /frontend/node_modules
+.gcloudignore
